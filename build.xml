@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="thrift-demo" default="thrift" basedir="../thrift-demo">
+
+    <description>
+        Generate code from thrift files
+    </description>
+
+    <property name="thrift.command" value="/usr/local/bin/thrift"/>
+
+    <property name="gen-source.basedir" value="target/generated-sources"/>
+    <property name="java.srcdir"        value="src/main/java"/>
+    <property name="thrift.srcdir"      value="src/main/thrift"/>
+    <property name="target.srcdir" value="com/github/tonydeng/demo/thrift/api" />
+
+    <target name="init-taskdefs">
+        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${ant-contrib:ant-contrib:jar}"/>
+    </target>
+
+    <target name="init">
+        <!-- good for debugging -->
+        <!--<echoproperties/>-->
+
+        <!-- prep dirs -->
+        <mkdir dir="${gen-source.basedir}" />
+        <delete>
+            <fileset dir="${gen-source.basedir}" includes="**/*"/>
+        </delete>
+    </target>
+
+    <target name="gen-thrift">
+        <mkdir dir="${gen-source.basedir}"/>
+        <exec executable="${thrift.command}">
+            <arg value="--gen" />
+            <arg value="java:beans"/>
+            <arg value="-o"/>
+            <arg value="${gen-source.basedir}"/>
+            <arg value="${thrift.srcdir}/thrift-demo.thrift"/>
+        </exec>
+    </target>
+
+    <target name="post-process">
+        <!-- move java sources into place -->
+        <delete>
+            <fileset dir="${java.srcdir}" includes="${target.srcdir}/*"/>
+        </delete>
+        <echo>srcdir is ${java.srcdir}/${target.srcdir}</echo>
+        <mkdir dir="${java.srcdir}/${target.srcdir}"/>
+        <copy todir="${java.srcdir}/${target.srcdir}">
+            <fileset dir="${gen-source.basedir}/gen-javabean/${target.srcdir}" includes="**/*"/>
+        </copy>
+    </target>
+
+    <target name="thrift" depends="init-taskdefs, init, gen-thrift, post-process"/>
+
+</project>
