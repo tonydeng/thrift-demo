@@ -217,7 +217,18 @@ Thrift可以让你选择客户端与服务器之间的传输通信协议的类�
     </target>
 
     <target name="thrift" depends="init-taskdefs, init, gen-thrift, post-process"/>
-
 </project>
+```
 
+## maven测试方式
+
+### 启动Thrift服务
+```
+mvn clean compile exec:java -Dexec.mainClass="com.github.tonydeng.demo.thrift.server.ThriftServer" -T20
+```
+
+### 使用Thrift客户端调用服务
+
+```
+mvn test -Dtest=AdditionClientTest -T20
 ```
