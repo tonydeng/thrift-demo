@@ -76,7 +76,7 @@ Thrift并且提供阻塞、非阻塞，单线程、多线程的模式运行在�
 * Container: 容器类型，即List、Set、Map等
 * Exception： 异常类型
 * Service：定义对象的接口和一系列方法
-
+* 
 ## 协议
 
 Thrift可以让你选择客户端与服务器之间的传输通信协议的类别，在传输协议上总体上划分为文本（text）和二进制（binary）传输协议，为节省带宽，提供传输效率，一般情况下使用二进制类型的传输协议为多数，但有时候还是会使用基于文本类型的协议，这些需要根据项目/产品中的实际需求：
@@ -101,3 +101,123 @@ Thrift可以让你选择客户端与服务器之间的传输通信协议的类�
 2. TThreadPoolServer: 多线程服务器端使用标准的阻塞式I/O。
 3. TNonblockingServer： 多线程服务器端使用的非阻塞式I/O，并实现了Java中的NIO通道。
 
+# Maven整合Thrift
+
+## libthrift依赖
+
+```xml
+<properties>
+    <libthrift.version>0.9.2</libthrift.version>
+</properties>
+
+<dependency>
+    <groupId>org.apache.thrift</groupId>
+    <artifactId>libthrift</artifactId>
+    <version>${libthrift.version}</version>
+       <exclusions>
+            <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+            </exclusion>
+        </exclusions>
+ </dependency>
+```
+
+## maven基于antrun插件将thrift IDL文件自动生成代码
+
+### 添加profile
+
+```xml
+<profiles>
+        <profile>
+            <id>profile-buildthrift</id>
+            <activation>
+                <file> <exists>/usr/local/bin/thrift</exists> </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <id>generate-sources</id>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <target>
+                                        <ant antfile="${project.basedir}/build.xml">
+                                            <target name="thrift"/>
+                                        </ant>
+                                    </target>
+                                </configuration>
+                                <goals> <goal>run</goal> </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+```
+
+### 添加build.xml文件
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="thrift-demo" default="thrift" basedir="../thrift-demo">
+
+    <description>
+        Generate code from thrift files
+    </description>
+
+    <property name="thrift.command" value="/usr/local/bin/thrift"/>
+
+    <property name="gen-source.basedir" value="target/generated-sources"/>
+    <property name="java.srcdir"        value="src/main/java"/>
+    <property name="thrift.srcdir"      value="src/main/thrift"/>
+    <property name="target.srcdir" value="com/github/tonydeng/demo/thrift/api" />
+
+    <target name="init-taskdefs">
+        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${ant-contrib:ant-contrib:jar}"/>
+    </target>
+
+    <target name="init">
+        <!-- good for debugging -->
+        <!--<echoproperties/>-->
+
+        <!-- prep dirs -->
+        <mkdir dir="${gen-source.basedir}" />
+        <delete>
+            <fileset dir="${gen-source.basedir}" includes="**/*"/>
+        </delete>
+    </target>
+
+    <target name="gen-thrift">
+        <mkdir dir="${gen-source.basedir}"/>
+        <exec executable="${thrift.command}">
+            <arg value="--gen" />
+            <arg value="java:beans"/>
+            <arg value="-o"/>
+            <arg value="${gen-source.basedir}"/>
+            <arg value="${thrift.srcdir}/thrift-demo.thrift"/>
+        </exec>
+    </target>
+
+    <target name="post-process">
+        <!-- move java sources into place -->
+        <delete>
+            <fileset dir="${java.srcdir}" includes="${target.srcdir}/*"/>
+        </delete>
+        <echo>srcdir is ${java.srcdir}/${target.srcdir}</echo>
+        <mkdir dir="${java.srcdir}/${target.srcdir}"/>
+        <copy todir="${java.srcdir}/${target.srcdir}">
+            <fileset dir="${gen-source.basedir}/gen-javabean/${target.srcdir}" includes="**/*"/>
+        </copy>
+    </target>
+
+    <target name="thrift" depends="init-taskdefs, init, gen-thrift, post-process"/>
+
+</project>
+
+```
