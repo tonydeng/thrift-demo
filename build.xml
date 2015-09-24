@@ -10,7 +10,7 @@
 
     <property name="gen-source.basedir" value="target/generated-sources"/>
     <property name="java.srcdir"        value="src/main/java"/>
-    <property name="thrift.srcdir"      value="src/main/thrift"/>
+    <property name="thrift.srcdir"      value="src/main/resources/thrift"/>
     <property name="target.srcdir" value="com/github/tonydeng/demo/thrift/api" />
 
     <target name="init-taskdefs">

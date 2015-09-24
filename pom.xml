@@ -45,9 +45,11 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>profile-buildthrift</id>
+            <id>buildthrift</id>
             <activation>
-                <file> <exists>/usr/local/bin/thrift</exists> </file>
+                <file>
+                    <exists>/usr/local/bin/thrift</exists>
+                </file>
             </activation>
             <build>
                 <plugins>
@@ -65,7 +67,9 @@
                                         </ant>
                                     </target>
                                 </configuration>
-                                <goals> <goal>run</goal> </goals>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
