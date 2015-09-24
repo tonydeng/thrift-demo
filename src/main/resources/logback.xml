@@ -9,7 +9,7 @@
         </layout>
     </appender>
 
-    <logger name="com.github.tonydeng" level="DEBUG" />
+    <logger name="com.github.tonydeng.demo.thrift" level="DEBUG" />
     <logger name="org.springframework" level="ERROR" />
     <logger name="org.quartz" level="ERROR" />
     <logger name="ch.qos" level="ERROR" />
