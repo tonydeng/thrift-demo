@@ -6,10 +6,12 @@ import com.github.tonydeng.demo.thrift.ping.api.Pong;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.thrift.TException;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by tonydeng on 15/9/24.
  */
+@Service
 public class PingPongServiceBean implements PingPongService.Iface{
     @Override
     public Pong knock(Ping ping) throws TException {

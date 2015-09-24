@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import javax.swing.text.StringContent;
-
 /**
  * Created by tonydeng on 15/9/24.
  */
