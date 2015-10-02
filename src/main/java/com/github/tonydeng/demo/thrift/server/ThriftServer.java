@@ -7,6 +7,9 @@ import com.github.tonydeng.demo.thrift.handler.AdditionServiceHandler;
 import com.github.tonydeng.demo.thrift.handler.LoginServiceHandler;
 import com.github.tonydeng.demo.thrift.handler.RegisterServiceHandler;
 import org.apache.thrift.TMultiplexedProcessor;
+import org.apache.thrift.TProcessor;
+import org.apache.thrift.protocol.TCompactProtocol;
+import org.apache.thrift.protocol.TProtocolFactory;
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TSimpleServer;
 import org.apache.thrift.server.TThreadPoolServer;
@@ -37,17 +40,10 @@ public class ThriftServer {
     private void startMuitiServer(){
 
         try {
-            TServerSocket serverTransport = new TServerSocket(9090);
-//            TProtocol protocol = new TCompactProtocol(serverTransport);
+            TServerTransport serverTransport = new TServerSocket(7911);
+            TProtocolFactory protocolFactory = new TCompactProtocol.Factory();
 
-            TMultiplexedProcessor processor = new TMultiplexedProcessor();
-            processor.registerProcessor("loginService",new LoginService.Processor<>(new LoginServiceHandler()));
-            processor.registerProcessor("registerService", new RegisterService.Processor<>(new RegisterServiceHandler()));
 
-            TServer server = new TThreadPoolServer(new TThreadPoolServer.Args(serverTransport).processor(processor));
-
-            log.info("Starting the muiti server......");
-            server.serve();
         } catch (TTransportException e) {
             e.printStackTrace();
         }

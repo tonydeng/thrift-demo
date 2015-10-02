@@ -18,21 +18,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "com.github.tonydeng.demo.thrift.ping")
 public class SpringConfiguration {
-//    @Qualifier
-//    private PingPongService.Iface pingPongService;
-//    @Qualifier
-//    private AdditionService.Iface additionService;
+    @Qualifier
+    private PingPongService.Iface pingPongService;
+    @Qualifier
+    private AdditionService.Iface additionService;
 
 
 
     @Bean
-    public TServlet thriftServlet(PingPongService.Iface pingPongService){
+    public TServlet thriftServlet(){
         TMultiplexedProcessor multiplexedProcessor = new TMultiplexedProcessor();
 
         PingPongService.Processor<PingPongService.Iface> pingPongProcessor = new PingPongService.Processor<>(pingPongService);
+        AdditionService.Processor<AdditionService.Iface> additionProcessor = new AdditionService.Processor<>(additionService);
 
         multiplexedProcessor.registerProcessor("pingPongService",new PingPongService.Processor<>(pingPongService));
-//        multiplexedProcessor.registerProcessor("additionService",new AdditionService.Processor<>(additionService));
+        multiplexedProcessor.registerProcessor("additionService",new AdditionService.Processor<>(additionService));
 
         TBinaryProtocol.Factory protocolFactory =  new TBinaryProtocol.Factory();
         TServlet thriftServlet=new TServlet(multiplexedProcessor,protocolFactory);

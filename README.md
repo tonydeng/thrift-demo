@@ -101,6 +101,10 @@ Thrift可以让你选择客户端与服务器之间的传输通信协议的类�
 2. TThreadPoolServer: 多线程服务器端使用标准的阻塞式I/O。
 3. TNonblockingServer： 多线程服务器端使用的非阻塞式I/O，并实现了Java中的NIO通道。
 
+### Java中各种Thrift Server可用实现及比较:
+
+[Java中各种Thrift Server可用实现及比较](thrift-server-for-java.md)
+
 # Maven整合Thrift
 
 ## libthrift依赖
