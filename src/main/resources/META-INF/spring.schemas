@@ -1,0 +1,8 @@
+http\://www.springframework.org/schema/beans/spring-beans-4.0.xsd=org/springframework/beans/factory/xml/spring-beans-4.0.xsd
+http\://www.springframework.org/schema/util/spring-util-4.0.xsd=org/springframework/beans/factory/xml/spring-util-4.0.xsd
+http\://www.springframework.org/schema/context/spring-context-4.0.xsd=org/springframework/context/config/spring-context-4.0.xsd
+http\://www.springframework.org/schema/tx/spring-tx-4.0.xsd=org/springframework/transaction/config/spring-tx-4.0.xsd
+http\://www.springframework.org/schema/aop/spring-aop-4.0.xsd=org/springframework/aop/config/spring-aop-4.0.xsd
+http\://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd=org/springframework/data/mongodb/config/spring-mongo-1.0.xsd
+http\://www.springframework.org/schema/data/mongo/spring-mongo.xsd=org/springframework/data/mongodb/config/spring-mongo-1.0.xsd
+http\://www.springframework.org/schema/aop/spring-task-4.0.xsd=org/springframework/aop/config/spring-task-4.0.xsd
