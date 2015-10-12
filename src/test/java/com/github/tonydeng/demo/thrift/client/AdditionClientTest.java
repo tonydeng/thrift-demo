@@ -1,6 +1,5 @@
-package com.github.tonydeng.demo.thrift;
+package com.github.tonydeng.demo.thrift.client;
 
-import com.github.tonydeng.demo.thrift.client.AdditionClient;
 import org.apache.thrift.TException;
 import org.junit.Ignore;
 import org.junit.Test;

@@ -33,6 +33,74 @@ apt-get install thrift
 ```
 brew install thrift
 ```
+
+### CentOS
+
+#### Update the System
+
+```
+yum -y update
+```
+
+#### Install the Platform Development Tools
+
+```
+yum -y groupinstall "Development Tools"
+```
+
+#### Upgrade autoconfig
+
+```
+wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
+tar xvf autoconf-2.69.tar.gz
+cd autoconf-2.69
+./configure --prefix=/usr
+make
+sudo make install
+cd ..
+```
+
+**Upgrade automake**
+
+```
+wget http://ftp.gnu.org/gnu/automake/automake-1.14.tar.gz
+tar xvf automake-1.14.tar.gz
+cd automake-1.14
+./configure --prefix=/usr
+make
+sudo make install
+cd ..
+```
+
+**Upgrade bison**
+
+```
+wget http://ftp.gnu.org/gnu/bison/bison-2.5.1.tar.gz
+tar xvf bison-2.5.1.tar.gz
+cd bison-2.5.1
+./configure --prefix=/usr
+make
+sudo make install
+cd ..
+```
+
+**Install C++ Lib Dependencies**
+
+```
+sudo yum -y install libevent-devel zlib-devel openssl-devel
+```
+
+**Build and Install the Apache Thrift IDL Compiler**
+
+```
+wget http://mirrors.cnnic.cn/apache/thrift/0.9.3/thrift-0.9.3.tar.gz
+tar zxvf thrift-0.9.3.tar.gz
+cd thrift-0.9.3
+./configure --with-boost=/usr/local
+make 
+make install
+```
+
 ### Windows
 
 下载一个官方编译的安装包，安装就好了。
@@ -100,6 +168,10 @@ Thrift可以让你选择客户端与服务器之间的传输通信协议的类�
 1. TSimpleServer： 单线程服务器端使用的标准的阻塞式I/O
 2. TThreadPoolServer: 多线程服务器端使用标准的阻塞式I/O。
 3. TNonblockingServer： 多线程服务器端使用的非阻塞式I/O，并实现了Java中的NIO通道。
+
+### Java中各种Thrift Server可用实现及比较:
+
+[Java中各种Thrift Server可用实现及比较](thrift-server-for-java.md)
 
 # Maven整合Thrift
 

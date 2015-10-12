@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created by tonydeng on 15/9/24.
  */
-@Service
+@Service("pingPongService")
 public class PingPongServiceBean implements PingPongService.Iface{
     @Override
     public Pong knock(Ping ping) throws TException {

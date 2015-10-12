@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Unit test for simple App.
  */
 public class BaseTest{
-    private static final Logger log = LoggerFactory.getLogger(BaseTest.class);
+    protected Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Test
     public void test(){
