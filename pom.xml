@@ -10,7 +10,7 @@
     <properties>
         <junit.version>4.11</junit.version>
         <logback.version>1.2.13</logback.version>
-        <libthrift.version>0.9.2</libthrift.version>
+        <libthrift.version>0.24.0</libthrift.version>
         <ant-contrib.version>1.0b3</ant-contrib.version>
     </properties>
     <dependencies>
